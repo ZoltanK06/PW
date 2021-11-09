@@ -1,24 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import Navbar from './components/NavBar/Navbar';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Home from './Pages/Home'
+import Shop from './Pages/Shop'
+import AboutUs from './Pages/AboutUs';
+import Cart from './Pages/Cart';
+import Sidebar from './components/NavBar/Sidebar';
+import {useState, useEffect} from 'react'
+import SignUp from './Pages/SignUp';
+import LogIn from './Pages/LogIn';
+import Contact from './Pages/Contact';
+import Featured from './Pages/Featured';
+import AccountHandler from './Pages/AccountHandler';
+import {app} from './firebase-config'
+import CartHandler from './Pages/CartHandler';
+import CheckOut from './Pages/CheckOut';
+import { deleteCartItems } from './actions/cartPrograms';
+import {getAdmins} from './actions/admins';
+import {useDispatch} from 'react-redux'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  
+  const dispatch = useDispatch();
+  const [openSbar, setopenSbar] = useState(false);
+  const [user, setUser] = useState("");
+
+    const changeState_Sbar = () => {
+        setopenSbar(!openSbar);
+    };
+
+    const handleLogOut = () => {
+        dispatch(deleteCartItems());
+        app.auth().signOut();
+  }
+
+    const authListener = () => {
+      app.auth().onAuthStateChanged(user => {
+          if(user) {
+              setUser(user);
+          }else{
+              setUser('');
+          }
+      })
+  }
+  
+  useEffect(() => {
+      authListener();
+      getAdmins();
+  }, [])
+
+  return (    
+      <Router>
+          <Navbar user={user} handleLogOut={handleLogOut} changeState_Sbar={changeState_Sbar} />
+          <Sidebar user={user} handleLogOut={handleLogOut} changeState_Sbar={changeState_Sbar}/>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/Shop" exact component={Shop} />
+            <Route path="/Aboutus" exact component={AboutUs} />
+            <Route path="/Cart" exact component={Cart} />
+            <Route path="/Contact" exact component={Contact} />
+            <Route path="/Signup" exact component={AccountHandler}/>
+            <Route path="/LogIn" exact component={AccountHandler} />
+            <Route path="/Featured" exact component={Featured} />
+            <Route path="/Checkout" exact component={CheckOut} />
+         </Switch>
+      </Router>
   );
 }
 
