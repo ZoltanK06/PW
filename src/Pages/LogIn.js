@@ -31,6 +31,8 @@ function LogIn(props) {
         catchErrors,
         loading,
         clearErrors,
+        setSignInForm,
+        signInForm
     } = props;
 
     return (
@@ -41,12 +43,12 @@ function LogIn(props) {
                 <form>
                     <Inputs>
                         <label htmlFor="login-email">Email Address</label>
-                        <Input type="text" placeholder="name@email.com" id="login-email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <Input type="text" placeholder="name@email.com" id="login-email" required onChange={(e) => setSignInForm({...signInForm, email: e.target.value})} />
                         <p>{emailError}</p>
                     </Inputs>
                     <Inputs>
                         <label htmlFor="login-password">Password</label>
-                        <Input type="password" placeholder="Password" id="login-password"required value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <Input type="password" placeholder="Password" id="login-password"required onChange={(e) => setSignInForm({...signInForm, password: e.target.value})}/>
                         <p>{passwordError}</p>
                     </Inputs>
                     <Button disabled={loading}>

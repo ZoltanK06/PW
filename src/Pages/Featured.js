@@ -1,6 +1,5 @@
 import React, {Suspense} from 'react'
 import {FeaturedContainer, FeaturedWrap, FeaturedSlideShow, FeaturedSlider, ClientImg, ClientInfo, ClientName, Review, Previous, Next} from '../Styles/Featured.style'
-import {clients} from '../programs/FeaturedClients'
 import {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {getMessages} from '../actions/messages'
@@ -12,12 +11,13 @@ function Featured() {
     const [currentClient, setCurrentClient] = useState(0);
     const messages = useSelector((state) => state.messages);
     let featured = (messages.filter(e => e.state === 'accepted'))
+
     useEffect(() => {
         dispatch(getMessages());
     }, [dispatch])
 
     const nextSlide = () => {
-        if(currentClient == (clients.length - 1)){
+        if(currentClient == (featured.length - 1)){
             setCurrentClient(0);
         }else{
             setCurrentClient(currentClient + 1);
@@ -26,7 +26,7 @@ function Featured() {
 
     const prevSlide = () => {
         if(currentClient == 0){
-            setCurrentClient(clients.length - 1);
+            setCurrentClient(featured.length - 1);
         }else{
             setCurrentClient(currentClient - 1);
         }

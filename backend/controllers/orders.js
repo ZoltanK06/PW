@@ -23,3 +23,13 @@ export const addOrder = async (req, res) => {
         res.status(409).json({message: error.message});
     }
 }
+
+export const deleteOrder = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No order item with id: ${id}`);
+
+    await Order.findByIdAndRemove(id);
+
+    res.json({ message: "Order deleted successfully." });
+}

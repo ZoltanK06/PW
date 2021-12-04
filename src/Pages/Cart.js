@@ -22,11 +22,16 @@ import {Top,
    CheckOutItemText,
    CheckOutItemPrice,
    CheckOutButton,
+   RightSide,
+   DiscountBox,
+   Input,
+   DiscountButton
 
    } from '../Styles/Cart.styles'
 import {programs} from '../programs/Programs'
 import {useState, useEffect} from 'react'
 import { getCartPrograms, deleteCartItems, deleteCartItem } from '../actions/cartPrograms'
+import {getDiscounts} from '../actions/discounts'
 import {useSelector, useDispatch} from 'react-redux';
 import {useHistory} from 'react-router'
 
@@ -34,15 +39,31 @@ function Cart() {
 
   const dispatch = useDispatch();
   const cartPrograms = useSelector((state) => state.cartPrograms);
-  const [price, setPrice] = useState(0);
+  const discounts = useSelector((state) => state.discounts);
+  const [price, setPrice] = useState(cartPrograms.reduce((a,c) => a+c.price, 0));
+  const [discount, setDiscount] = useState(0.00);
+  const [givenCode, setGivenCode] = useState("");
+  const [totalPrice, setTotalPrice] = useState(cartPrograms.reduce((a,c) => a+c.price, 0));
   const history = useHistory();
 
   useEffect(() => {
     dispatch(getCartPrograms());
+    dispatch(getDiscounts());
+    console.log(discounts);
   }, [dispatch])
 
   const continueShopping = () => {
     history.push('/Shop');
+  }
+
+  const verifyDiscount = () => {
+    let i;
+    for(i = 0; i<discounts.length; i++){
+      if(givenCode === discounts[i].code){
+        setDiscount((price * discounts[i].percentage) / 100);
+        setTotalPrice(price - discount);
+      }
+    }
   }
 
     return (
@@ -83,25 +104,34 @@ function Cart() {
                
                   </ProgramList>
  
- 
+              <RightSide>
               <CheckoutBox>
                 <CheckOutTitle>ORDER SUMMARY</CheckOutTitle>
                 <CheckOutItem>
                   <CheckOutItemText><b>Subtotal: </b></CheckOutItemText>
-                  <CheckOutItemPrice>$ {cartPrograms.reduce((a,c) => a+c.price, 0)}</CheckOutItemPrice>
+                  <CheckOutItemPrice>$ {price}</CheckOutItemPrice>
                 </CheckOutItem>
                 <CheckOutItem>
                   <CheckOutItemText><b>Discount: </b> </CheckOutItemText>
-                  <CheckOutItemPrice>$ -0.00</CheckOutItemPrice>
+                  <CheckOutItemPrice>$ -{discount}</CheckOutItemPrice>
                 </CheckOutItem>
                 <CheckOutItem type="total">
                   <CheckOutItemText><b>Total: </b></CheckOutItemText>
-                  <CheckOutItemPrice>$ {cartPrograms.reduce((a,c) => a+c.price, 0)}</CheckOutItemPrice>
+                  <CheckOutItemPrice>$ {totalPrice}</CheckOutItemPrice>
                 </CheckOutItem>
                 <CheckOutButton onClick={() =>{
                   history.push('/CheckOut');
                 }}>CHECKOUT NOW</CheckOutButton>
               </CheckoutBox>
+              <DiscountBox>
+              <Input
+                        type="text"
+                        placeholder="DISCOUNT CODE"
+                        onChange={e => setGivenCode(e.target.value)}
+                />
+                <CheckOutButton onClick = {verifyDiscount}>APPLY</CheckOutButton>
+              </DiscountBox>
+              </RightSide>
               </Wrapper>
             ):(
               <div />

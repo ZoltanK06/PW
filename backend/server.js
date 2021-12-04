@@ -10,6 +10,7 @@ import orderRoutes from './routes/orders.js'
 import messagesRoutes from './routes/messages.js'
 import adminRoutes from './routes/admin.js'
 import usersRouter from './routes/users.js';
+import discountRouter from './routes/discount.js'
 
 
 const app = express();
@@ -24,6 +25,7 @@ app.use('/orders', orderRoutes);
 app.use('/messages', messagesRoutes);
 app.use('/admins', adminRoutes); 
 app.use('/users', usersRouter);
+app.use('/discount', discountRouter);
 
 const CONNECTION_URL = 'mongodb+srv://Katona_Zoltan:database@cluster0.xkea0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 

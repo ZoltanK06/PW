@@ -1,6 +1,6 @@
 import express from "express";
 
-import { signin, signup, getUsers, getAdmins, getUser, getSimpleUsers, deleteUser } from "../controllers/users.js";
+import { signin, signup, getUsers, getAdmins, getUser, getSimpleUsers, deleteUser, updateUser } from "../controllers/users.js";
 
 const router = express.Router();
 
@@ -11,5 +11,6 @@ router.get("/simple", getSimpleUsers);
 router.get("/admins", getAdmins);
 router.get("/:id", getUser);
 router.delete('/:id', deleteUser);
+router.patch('/:id', updateUser);
 
 export default router;

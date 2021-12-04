@@ -8,8 +8,10 @@ export default (users = [], action) => {
             return action.payload;
         case 'GET_USER':
             return action.payload;
-            case 'DELETE_USER':
-                return users.filter((user) => user._id !== action.payload);
+        case 'DELETE_USER':
+            return users.filter((user) => user._id !== action.payload);
+        case 'UPDATE_USER':
+            return users.map((user) => (user._id===action.payload._id ? action.payload : user));
         default:
             return users;
     }

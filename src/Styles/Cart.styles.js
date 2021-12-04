@@ -132,6 +132,7 @@ export const CheckoutBox = styled.div`
   height: 50vh;
   margin-left: 100px;
   margin-top: 5px;
+  margin-bottom: 30px;
 `
 
 export const CheckOutTitle = styled.h1`
@@ -207,3 +208,65 @@ export const ProgramButton = styled.button`
     color: #000;
   }
 `;
+
+export const RightSide = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 500px; 
+`
+
+export const DiscountBox = styled.div`
+  flex: 1;
+  border: 2px solid #D64933;
+  border-radius: 10px;
+  padding: 20px;
+  height: 30vh;
+  margin-left: 100px;
+  margin-top: 5px;
+`
+
+export const Input = styled.input`
+    width: 320px;
+    outline: none;
+    padding: 8px 16px;
+    border: 1px solid #e0e6e8;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #7C7C7C;
+    transition: box-shadow 0.2s;
+    margin-top: 20px;
+    
+    &::placeholder {
+        color: #lightgrey;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px rgb(169, 172, 255, 0.5); 
+    }
+`
+
+export const DiscountButton = styled.button`
+font-size: 1rem;
+padding: 0.25rem 1rem;
+border: none;
+background: #92DCE5;
+color: #000;
+transition: 0.2 ease-out;
+border-radius: 4px;
+outline: none;
+cursor: pointer;    
+text-decoration: none;
+margin-left: 100px;
+margin-right: 50px;
+margin-top: 30px;
+margin-bottom: 35px;
+height: 35px;
+width: 175px;
+
+&:hover {
+background: #fff;
+transition: 0.2s ease-out;
+cursor: pointer;
+color: #000;
+}
+`

@@ -44,4 +44,15 @@ export const deleteUser = (id) => async (dispatch) => {
     } catch (error) {
       console.log(error);
     }
-  };
+}
+
+export const updateUser = (id,user) => async (dispatch) => {
+    try {
+        const { data } = await axios.patch('/users/' + id, user);
+        
+        dispatch({ type: 'UPDATE_USER', payload: data });
+    } catch (error) {
+        console.error(error);
+    }
+}
+

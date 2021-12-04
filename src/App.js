@@ -11,6 +11,10 @@ import SignUp from './Pages/SignUp';
 import LogIn from './Pages/LogIn';
 import Contact from './Pages/Contact';
 import Featured from './Pages/Featured';
+import AdminUsers from './AdminPages/AdminUsers';
+import AdminMessages from './AdminPages/AdminMessages';
+import AdminOrders from './AdminPages/AdminOrders';
+import AdminDiscounts from './AdminPages/AdminDiscounts';
 import AccountHandler from './Pages/AccountHandler';
 import {app} from './firebase-config'
 import CartHandler from './Pages/CartHandler';
@@ -63,6 +67,10 @@ function App() {
             <Route path="/LogIn" exact component={AccountHandler} />
             <Route path="/Featured" exact component={Featured} />
             <Route path="/Checkout" exact component={CheckOut} />
+            <Route path="/Admin/Users" exact component={AdminUsers} />
+            <Route path="/Admin/Messages" exact component={AdminMessages} />
+            <Route path="/Admin/Orders" exact component={AdminOrders} />
+            <Route path="/Admin/Discounts" exact component={AdminDiscounts} />
          </Switch>
       </Router>
   );

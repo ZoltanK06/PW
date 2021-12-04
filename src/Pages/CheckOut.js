@@ -26,10 +26,10 @@ function CheckOut() {
     const [expiry, setExpiry] = useState('');
     const [cvc, setCvc] = useState('');
     const [focus, setFocus] = useState('');
-    const [user, setUser] = useState("");
 
     const dispatch = useDispatch();
     const cartPrograms = useSelector((state) => state.cartPrograms);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const history = useHistory();
 
     //ERRORS
@@ -45,19 +45,9 @@ function CheckOut() {
         setNameError('');
     }
 
-    const authListener = () => {
-        app.auth().onAuthStateChanged(user => {
-            if(user) {
-                setUser(user);
-            }else{
-                setUser('');
-            }
-        })
-    }
 
     useEffect(() => {
         dispatch(getCartPrograms());
-        authListener();
     }, [dispatch])
 
     const addPrograms = () =>{
@@ -79,8 +69,9 @@ function CheckOut() {
             return setCvcError("Please introduce a valid CVC");
         }
         
-        let order = {buyer_email: user.email, value: cartPrograms.reduce((a,c) => a+c.price, 0), program_name: cartPrograms.reduce((a,c) => [...a,c.name], [])}
+        let order = {buyer_email: user?.result.email, value: cartPrograms.reduce((a,c) => a+c.price, 0), program_name: cartPrograms.reduce((a,c) => [...a,c.name], [])}
         dispatch(addOrder(order));
+        dispatch(deleteCartItems());
         history.push('/');
     }
 

@@ -24,3 +24,13 @@ export const getOrders = () => async (dispatch) => {
     }
 
 }
+
+export const deleteOrder = (id) => async (dispatch) => {
+    try {
+        await axios.delete('/orders/' + id);
+    
+        dispatch({ type: 'DELETE_ORDER', payload: id });
+      } catch (error) {
+        console.log(error);
+      }
+}

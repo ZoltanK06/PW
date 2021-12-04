@@ -8,34 +8,15 @@ import {app} from '../firebase-config';
 function SignUp(props) {
 
     const {
-        email, 
-        setEmail, 
-        name, 
-        setName, 
-        password, 
-        setPassword, 
-        confirmPassword, 
-        setConfirmPassword, 
         emailError, 
-        setEmailError,
         passwordError,
-        setPasswordError,
         confirmPasswordError,
-        setConfirmPasswordError,
-        hasAccount,
-        setHasAccount,
-        handleLogin,
-        handleLogOut,
         handleSignup,
-        user,
-        setUser,
         changePagetoLogin,
         nameError,
-        setNameError,
-        catchErrors,
-        Errors,
         loading,
-        clearErrors,
+        signUpForm,
+        setSignUpForm
     } = props;
 
     return (
@@ -47,22 +28,22 @@ function SignUp(props) {
             <form >
                 <Inputs>
                     <label htmlFor="signup-name">Full Name</label>
-                    <Input type="text" placeholder="Full Name" id="signup-name" required value={name} onChange={(e) => setName(e.target.value)}/>
+                    <Input type="text" placeholder="Full Name" id="signup-name" required onChange={(e) => setSignUpForm({...signUpForm, name: e.target.value})}/>
                     <p>{nameError}</p>
                 </Inputs>
                 <Inputs>
                     <label htmlFor="signup-email">Email Address</label>
-                    <Input type="text" placeholder="name@email.com" id="signup-email" required value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <Input type="text" placeholder="name@email.com" id="signup-email" required onChange={(e) => setSignUpForm({...signUpForm, email: e.target.value})}/>
                     <p>{emailError}</p>
                 </Inputs>
                 <Inputs>
                     <label htmlFor="signup-password">Password</label>
-                    <Input type="password" placeholder="Password" id="signup-password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <Input type="password" placeholder="Password" id="signup-password" required onChange={(e) => setSignUpForm({...signUpForm, password: e.target.value})}/>
                     <p>{passwordError}</p>
                 </Inputs>
                 <Inputs>
                     <label htmlFor="signup-password">Confirm Password</label>
-                    <Input type="password" placeholder="Confirm Password" id="signup-confirm" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                    <Input type="password" placeholder="Confirm Password" id="signup-confirm" required onChange={(e) => setSignUpForm({...signUpForm, confirmPassword: e.target.value})}/>
                     <p>{confirmPasswordError}</p>
                 </Inputs>
                 <Button disabled={loading} >   

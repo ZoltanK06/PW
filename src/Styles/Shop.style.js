@@ -104,10 +104,5 @@ export const ProgramButton = styled.button`
 `;
 
 export const FilterContainer = styled.div`
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 20px;
-margin-bottom: 80px;
-margin-top: 25px;
+
 `
